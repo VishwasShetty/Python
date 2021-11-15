@@ -31,6 +31,7 @@ const orderEvent = 'order-event'
 // let iotServerThingCAContent = fs.readFileSync('../certificates/caCertificate.pem').toString('base64')
 let publishTopic = ""
 
+
 //iot thing which represents the server 
 let iotServerThing;
 const iotServerThingEndPoint = process.env.SERVER_THING_ENDPOINT;
