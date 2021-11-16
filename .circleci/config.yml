@@ -1,14 +1,14 @@
 version: 2.1
 jobs:
-  build:
-    # pre-built images: https://circleci.com/docs/2.0/circleci-images/
-    docker:
-      - image: circleci/node:14-browsers
+  newman-collection-run:
+    executor: newman/postman-newman-docker
     steps:
       - checkout
-      - run:
-          name: The First Step
-          command: |
-            echo 
+      - newman/newman-run:
+          collection: https://www.getpostman.com/collections/6446f5ecd440f49e4746?apikey=PMAK-61934b34bd1cd60051615fc3-a40f33edd7df44f1e7bf05b1fedefe47b7
             
             
+workflows:
+  example-workflow:
+    jobs:
+      - newman-collection-run
