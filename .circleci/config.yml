@@ -9,6 +9,5 @@ jobs:
       - run:
           name: The First Step
           command: |
-            ssh ubuntu@54.221.108.130 sudo rm ~/iotracx/swaggertest/AppAPIs.yaml
-            yes
+            
             
