@@ -1,6 +1,8 @@
 version: 2.1
+
 orbs:
   newman: postman/newman@0.0.2
+
 jobs:
   newman-collection-run:
     executor: newman/postman-newman-docker
@@ -8,8 +10,6 @@ jobs:
       - checkout
       - newman/newman-run:
           collection: https://www.getpostman.com/collections/6446f5ecd440f49e4746?apikey=PMAK-61934b34bd1cd60051615fc3-a40f33edd7df44f1e7bf05b1fedefe47b7
-            
-            
 workflows:
   example-workflow:
     jobs:
