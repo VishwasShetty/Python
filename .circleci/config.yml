@@ -14,7 +14,7 @@ jobs:
       - run: 
           command:
             echo "falied send notification to email that build is failed"
-          when: on_fail
+          when: on_fail 
   newman-collection-run:
     executor: newman/postman-newman-docker
     steps:
