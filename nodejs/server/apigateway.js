@@ -29,6 +29,7 @@ const orderEvent = 'order-event'
 // let iotServerThingPrivateKeyContent = fs.readFileSync('../certificates/privateKeyCertificate.pem.key').toString('base64')
 // let iotServerThinClientKeyContent = fs.readFileSync('../certificates/clientCertificate.pem.crt').toString('base64')
 // let iotServerThingCAContent = fs.readFileSync('../certificates/caCertificate.pem').toString('base64')
+
 let publishTopic = ""
 
 //iot thing which represents the server 
