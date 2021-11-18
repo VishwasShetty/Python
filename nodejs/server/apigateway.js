@@ -12,7 +12,6 @@ const iot = require('aws-iot-device-sdk')
 require('dotenv').config()
 const geolib = require('geolib');
 
-
 const mongoDBUri = process.env.URI;
 const dbName = process.env.DB;
 
