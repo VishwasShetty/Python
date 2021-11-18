@@ -35,4 +35,4 @@ workflows:
               only:
                 - master
           requires:
-            - build-project
+            - pull-and-build
