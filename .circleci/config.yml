@@ -29,4 +29,5 @@ workflows:
             branches:
               only:
                 - master
+                
       - newman-collection-run
