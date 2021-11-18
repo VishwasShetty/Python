@@ -6,6 +6,7 @@ jobs:
     docker:
       - image: arvindr226/alpine-ssh
     steps:
+      - run: apk add --update openssh-client git
       - checkout
       - run: ssh -oStrictHostKeyChecking=no -v $USER@$IP "./deploy.sh"
 
