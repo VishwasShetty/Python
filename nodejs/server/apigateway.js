@@ -367,19 +367,8 @@ function initialize() {
             })
             //inventory 
             app.post('/mouvit/inventory/create',authenticateJWT,async function(req,res){
-                await botCollection.find({"bot_id":req.body.bot_id}).toArray().then(result=>{
-                    if(result.length>0){
-                        req.body.service_provider=result[0].associated_service_provider;
-                        req.body.application_name=result[0].associated_application;
-                        handleCreateInventory(req,res,inventoryCollection);
-                    }
-                    else{
-                        res.setHeader('content-type', 'Application/json');
-                        res.statusCode = 400;
-                        res.json({ "response_desc": "Invalid Bot Id" });
-                    }
-                });
-                
+                req.body.bot_id = Math.floor(Math.random() * 1000) + 1; 
+                handleCreateInventory(req,res,inventoryCollection);                
             });  
             app.put("/mouvit/inventory/update",authenticateJWT,function(req,res){
                 handleUpdateInventory(req,res,inventoryCollection);
@@ -686,6 +675,7 @@ async function handleSearchForRoles(req,res,rolesCollection){
 }
 
 async function handleCreateForBot(body, res, botCollection,appsCollection) {
+    body['bot_id'] =  Math.floor(Math.random() * 1000) + 1; 
     body['bot_status'] = 'idle'
     var queryForBot = { 'bot_id': body['bot_id'] }
     var queryForApp = {}
