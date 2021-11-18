@@ -8,7 +8,7 @@ jobs:
       - run: apk add --update openssh-client git
       - checkout
       - run: ssh -oStrictHostKeyChecking=no -v $USER@$IP "./deploy.sh"
-
+      
 # Orchestrate our job run sequence
 workflows:
   version: 2
