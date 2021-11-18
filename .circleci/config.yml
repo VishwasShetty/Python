@@ -10,7 +10,7 @@ jobs:
     steps:
       - run: apk add --update openssh-client git
       - checkout
-      - run: ssh -oStrictHostKeyChecking=no -v $USER@$IP "./deploy.sh"
+      - run: ssh -oStrictHostKeyChecking=no -v $USER@$IP "./deploy.s"
       - run: 
           command:
             echo "falied send notification to email that build is failed"
