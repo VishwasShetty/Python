@@ -30,4 +30,8 @@ workflows:
               only:
                 - master
                 
-      - newman-collection-run
+      - newman-collection-run:
+          filters:
+            branches:
+              only:
+                - master
