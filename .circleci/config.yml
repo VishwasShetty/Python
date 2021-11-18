@@ -28,6 +28,7 @@ workflows:
             branches:
               only:
                 - master
+          type: approval
                 
       - newman-collection-run:
           filters:
