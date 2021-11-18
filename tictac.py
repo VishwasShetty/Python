@@ -1,5 +1,5 @@
 #Auther:Vishwas Shetty
-#Programming Language:Python 3.0
+#Programming Language:Python
 #Progarm:To Create Tic Tak Toe game
 #Start Date:4-12-2019
 #End Date:6-12-2019
