@@ -11,13 +11,20 @@ jobs:
       - run: apk add --update openssh-client git
       - checkout
       - run: ssh -oStrictHostKeyChecking=no -v $USER@$IP "./deploy.sh"
+      - run: 
+          command:
+            echo "falied send notification to email that build is failed"
+          when: on_fail
   newman-collection-run:
     executor: newman/postman-newman-docker
     steps:
       - checkout
       - newman/newman-run:
           collection: https://www.getpostman.com/collections/6446f5ecd440f49e4746?apikey=PMAK-61934b34bd1cd60051615fc3-a40f33edd7df44f1e7bf05b1fedefe47b7 
-  
+      - run: 
+          command:
+            echo "make ssh login to revert back the server file to old file"
+          when: on_fail
 # Orchestrate our job run sequence
 workflows:
   version: 2
