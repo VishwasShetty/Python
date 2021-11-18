@@ -24,16 +24,16 @@ workflows:
   build-project:
     jobs:
       - pull-and-build:
-          filters:
-            branches:
-              only:
-                - master
+          # filters:
+          #   branches:
+          #     only:
+          #       - master
           type: approval
                 
       - newman-collection-run:
-          filters:
-            branches:
-              only:
-                - master
+          # filters:
+          #   branches:
+          #     only:
+          #       - master
           requires:
             - pull-and-build
