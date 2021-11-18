@@ -7,7 +7,7 @@ jobs:
       - image: arvindr226/alpine-ssh
     steps:
       - checkout
-      - run: apt-get update && apt-get install -y openssh-client git
+      - run: apk add --update openssh-client git
 
 # Orchestrate our job run sequence
 workflows:
