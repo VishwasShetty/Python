@@ -7,15 +7,11 @@ jobs:
       - image: arvindr226/alpine-ssh
     steps:
       - checkout
-      - run: ssh -oStrictHostKeyChecking=no -v $USER@$IP "./deploy.sh"
+      - run: apt-get update && apt-get install -y openssh-client git
 
 # Orchestrate our job run sequence
 workflows:
   version: 2
   build-project:
     jobs:
-      - pull-and-build:
-          filters:
-            branches:
-              only:
-                - master
+      - pull-and-build
