@@ -1,4 +1,5 @@
 version: 2.1
+
 # Define the jobs we want to run for this project
 jobs:
   pull-and-build:
@@ -8,7 +9,7 @@ jobs:
       - run: apk add --update openssh-client git
       - checkout
       - run: ssh -oStrictHostKeyChecking=no -v $USER@$IP "./deploy.sh"
-      
+
 # Orchestrate our job run sequence
 workflows:
   version: 2
