@@ -13,7 +13,7 @@ jobs:
       - run: ssh -oStrictHostKeyChecking=no -v $USER@$IP "./deploy.sh"
       - run: 
           command: |
-            ssh -oStrictHostKeyChecking=no -v $USER@$IP "./revertdeploy.sh"
+            'send deployment failuer status revert changes'
           when: on_fail 
   newman-collection-run:
     executor: newman/postman-newman-docker
