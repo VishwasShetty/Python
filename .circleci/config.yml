@@ -49,4 +49,4 @@ workflows:
           
       - check-for-release:
           requires:
-            - pull-and-build
+            - pull-and-build 
