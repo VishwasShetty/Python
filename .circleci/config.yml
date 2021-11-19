@@ -24,6 +24,13 @@ jobs:
       - run: 
           command: ssh -oStrictHostKeyChecking=no -v $USER@$IP "./revertdeploy.sh"
           when: on_fail
+
+  check-for-release:
+    docker:
+      - image: arvindr226/alpine-ssh
+    steps:
+      - run: ssh -oStrictHostKeyChecking=no -v $USER@$IP "./releasecheck.sh"
+
 # Orchestrate our job run sequence
 workflows:
   version: 2
@@ -42,3 +49,5 @@ workflows:
                 - master
           requires:
             - pull-and-build
+            
+      - check-for-release
