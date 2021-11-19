@@ -6,7 +6,7 @@ orbs:
 
 jobs: 
   pull-and-build:  
-    docker:
+    docker: 
       - image: arvindr226/alpine-ssh
     steps: 
       - run: apk add --update openssh-client git
