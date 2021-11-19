@@ -1,1 +1,5 @@
 release=v2.0
+
+#features updated 
+1 creating bot,serviceprovider,remote operator,
+2 creating inventory under bot
