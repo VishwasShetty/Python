@@ -5,7 +5,7 @@ orbs:
   newman: postman/newman@0.0.2
 
 jobs: 
-  pull-and-build:   
+  pull-and-build:  
     docker:
       - image: arvindr226/alpine-ssh
     steps: 
