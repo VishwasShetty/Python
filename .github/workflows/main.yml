@@ -5,7 +5,7 @@ name: Trigger Circle Ci
 on:
   release:
     types: # This configuration does not affect the page_build event above
-      - created
+      - [created,updated]
       
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
