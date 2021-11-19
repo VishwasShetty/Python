@@ -47,4 +47,6 @@ workflows:
           requires:
             - pull-and-build
           
-      - check-for-release
+      - check-for-release:
+          requires:
+            - pull-and-build
