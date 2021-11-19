@@ -46,5 +46,5 @@ workflows:
       - newman-collection-run:
           requires:
             - pull-and-build
-            
+          
       - check-for-release
