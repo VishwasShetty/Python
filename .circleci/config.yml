@@ -44,10 +44,6 @@ workflows:
                 - master
                 
       - newman-collection-run:
-          filters:
-            branches:
-              only:
-                - master
           requires:
             - pull-and-build
             
