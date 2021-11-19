@@ -43,7 +43,7 @@ workflows:
               only:
                 - master
                 
-      - newman-collection-run:
+      - newman-collection-run: 
           requires:
             - pull-and-build
           
