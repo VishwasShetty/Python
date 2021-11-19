@@ -32,6 +32,7 @@ jobs:
     docker:
       - image: arvindr226/alpine-ssh
     steps:
+      #ip and user of the test server
       - run: ssh -oStrictHostKeyChecking=no -v $USER@$IP "./deploytest.sh"
 
   newman-collection-run-test:
