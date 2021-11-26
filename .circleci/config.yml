@@ -9,6 +9,7 @@ jobs:
   start-ec2:
     docker:
       - image: cimg/base:stable
+    executor: aws-cli/default
     steps:
       # - aws-cli/setup
       # - aws-cli/install 
