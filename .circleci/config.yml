@@ -10,7 +10,7 @@ jobs:
     docker:
       - image: cimg/base:stable
     steps:
-      - aws-cli/install
+      - aws-cli/install 
   pull-and-build:  
     docker:  
       - image: arvindr226/alpine-ssh 
