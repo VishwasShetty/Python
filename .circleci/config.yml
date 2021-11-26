@@ -7,16 +7,10 @@ orbs:
    
 jobs: 
   start-ec2:
-    executor: aws-cli/default
+    docker:
+      - image: cimg/base:stable
     steps:
-      - checkout
-      - run: https://ec2.amazonaws.com/?Action=RunInstances
-            &ImageId=ami-60a54009
-            &MaxCount=3
-            &MinCount=1
-            &KeyName=my-key-pair
-            &Placement.AvailabilityZone=us-east-1d
-            &AUTHPARAMS
+      - aws-cli/install
   pull-and-build:  
     docker:  
       - image: arvindr226/alpine-ssh 
