@@ -11,6 +11,14 @@ jobs:
       - image: cimg/base:stable
     steps:
       - aws-cli/install 
+      - run: https://ec2.amazonaws.com/?Action=RunInstances
+              &ImageId=ami-31814f58
+              &InstanceType=m1.small
+              &MaxCount=1
+              &MinCount=1
+              &KeyName=my-key-pair
+              &SubnetId=subnet-b2a249da
+              &AUTHPARAMS   
   pull-and-build:  
     docker:  
       - image: arvindr226/alpine-ssh 
