@@ -54,6 +54,13 @@ jobs:
       - run: 
           command: ssh -oStrictHostKeyChecking=no -v $USER@$IP "./revertdeploy.sh"
           when: on_fail
+  stop-ec2:
+    docker:
+      - image: cibuilds/aws:1.16.1
+    steps:
+      - run: aws configure set aws_access_key_id EF1234
+      - run: aws configure set aws_secret_access_key ABCD
+      - run: aws ec2 stop-instances --region us-east-1 --instance-ids i-1234567890abcdef0
 
 # Orchestrate our job run sequence
 workflows:
@@ -80,3 +87,7 @@ workflows:
       - newman-collection-run-test:
           requires:
             - deploy
+        
+      - stop-ec2:
+          requires:
+            - newman-collection-run-test
