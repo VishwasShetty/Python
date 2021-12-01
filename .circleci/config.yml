@@ -11,12 +11,12 @@ jobs:
     steps:
       - checkout
       - aws-cli/setup:
-          aws-access-key-id: rfrf 
-          aws-region: eu-west-2 
-          aws-secret-access-key: sss 
-          configure-default-region: false 
-          profile-name: www 
-          role-arn: www
+          # aws-access-key-id: kiikie 
+          # aws-region: eu-west-2 
+          # aws-secret-access-key: kiiikke 
+          # configure-default-region: false 
+          profile-name: example 
+          # role-arn: eeeeeeee
       - run: "aws ec2 start-instances --instance-ids i-1234567890abcdef0 "
   # start-ec2:
   #   docker:
