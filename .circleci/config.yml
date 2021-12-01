@@ -11,9 +11,14 @@ jobs:
       - image: cibuilds/aws:1.16.1
     steps:
       - checkout
+      - run :
+          command: aws configure set aws_access_key_id EF1234
+      - run :
+          command: aws configure set aws_access_key_id ABCD
       - run:
-          name: AWS S3
-          command: AWS_ACCESS_KEY_ID=ABCD AWS_SECRET_ACCESS_KEY=EF1234 aws ec2 start-instances --region us-east-1 --instance-ids i-1234567890abcdef0 
+          name: AWS EC2
+          command: aws ec2 start-instances --region us-east-1 --instance-ids i-1234567890abcdef0
+       
   # start-ec2:
   #   docker:
   #     - image: cimg/base:stable
