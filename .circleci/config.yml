@@ -58,9 +58,9 @@ jobs:
     docker:
       - image: cibuilds/aws:1.16.1
     steps:
-      - run: aws configure set aws_access_key_id EF1234
-      - run: aws configure set aws_secret_access_key ABCD
-      - run: aws ec2 stop-instances --region us-east-1 --instance-ids i-1234567890abcdef0
+      - run: aws configure set aws_access_key_id $AWS_ACCESS_KEY
+      - run: aws configure set aws_secret_access_key $AWS_SECRET_KEY
+      - run: aws ec2 stop-instances --region $AWS_EC2_REGION --instance-ids $AWS_EC2_INSTANCE_ID
 
 # Orchestrate our job run sequence
 workflows:
