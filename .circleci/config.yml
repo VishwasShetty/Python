@@ -9,11 +9,11 @@ jobs:
   start-ec2:
     executor: aws-cli/default
     steps:
-      - run: aws configure set aws_access_key_id EF1234
-      - run: aws configure set aws_secret_access_key ABCD
+      - run: "aws configure set aws_access_key_id EF1234"
+      - run: "aws configure set aws_secret_access_key ABCD"
       - run:
           name: AWS EC2 START INSTANCE
-          command: aws ec2 start-instances --region us-east-1 --instance-ids i-1234567890abcdef0
+          command: "aws ec2 start-instances --region us-east-1 --instance-ids i-1234567890abcdef0"
   # start-ec2:
   #   docker:
   #     - image: cimg/base:stable
