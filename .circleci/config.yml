@@ -6,20 +6,14 @@ orbs:
   aws-cli: circleci/aws-cli@2.0
    
 jobs: 
-  # start-ec2:
-  #   docker:
-  #     - image: cimg/base:stable
-  #   executor: aws-cli/default
-  #   steps:
+  start-ec2:
+    docker:
+      - image: cimg/base:stable
+    executor: aws-cli/default
+    steps:
   #     # - aws-cli/setup
   #     # - aws-cli/install 
-  #     - run: aws ec2 run-instances \
-  #         --image-id ami-0abcdef1234567890 \
-  #         --instance-type t2.micro \
-  #         --subnet-id subnet-08fc749671b2d077c \
-  #         --security-group-ids sg-0b0384b66d7d692f9 \
-  #         --key-name MyKeyPair \
-  #         --block-device-mappings file://mapping.json
+        - run: aws ec2 start-instances --instance-ids i-1234567890abcdef0
   pull-and-build:  
     docker:  
       - image: arvindr226/alpine-ssh 
