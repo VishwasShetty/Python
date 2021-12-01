@@ -7,18 +7,15 @@ orbs:
    
 jobs: 
   start-ec2:
-    executor: aws-cli/default
+    docker:
+      - image: cibuilds/aws:1.16.1
     steps:
       - checkout
-      - aws-cli/install
-      - aws-cli/setup:
-          aws-access-key-id: kiikie 
-          aws-region: kkiio 
-          aws-secret-access-key: kiiikke 
-          configure-default-region: false 
-          profile-name: example 
-          role-arn: eeeeeeee
-      - run: "aws ec2 start-instances --instance-ids i-1234567890abcdef0 "
+      - attach_workspace:
+          at: /home/circleci
+      - run:
+          name: AWS S3
+          command: aws ec2 start-instances --instance-ids i-1234567890abcdef0
   # start-ec2:
   #   docker:
   #     - image: cimg/base:stable
