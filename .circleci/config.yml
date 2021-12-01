@@ -14,7 +14,7 @@ jobs:
       - run :
           command: aws configure set aws_access_key_id EF1234
       - run :
-          command: aws configure set aws_access_key_id ABCD
+          command: aws configure set aws_secret_access_key ABCD
       - run:
           name: AWS EC2
           command: aws ec2 start-instances --region us-east-1 --instance-ids i-1234567890abcdef0
