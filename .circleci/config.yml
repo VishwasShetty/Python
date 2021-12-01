@@ -17,7 +17,10 @@ jobs:
           # configure-default-region: false 
           profile-name: example 
           # role-arn: eeeeeeee
-      - run: "aws ec2 start-instances --region eu-west-2 --instance-ids i-1234567890abcdef0 "
+      - run: "
+              aws configure
+              aws ec2 start-instances --region eu-west-2 --instance-ids i-1234567890abcdef0  
+             "
   # start-ec2:
   #   docker:
   #     - image: cimg/base:stable
