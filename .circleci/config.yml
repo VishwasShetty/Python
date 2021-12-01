@@ -3,7 +3,7 @@ version: 2.1
 # Define the jobs we want to run for this project
 orbs:    
   newman: postman/newman@0.0.2  
-  aws-cli: circleci/aws-cli@2.0
+  #aws-cli: circleci/aws-cli@2.0
    
 jobs: 
   start-ec2:
@@ -13,7 +13,7 @@ jobs:
       - checkout
       - run:
           name: AWS S3
-          command: aws ec2 start-instances --instance-ids i-1234567890abcdef0
+          command: aws ec2 start-instances --region us-east-1 --instance-ids i-1234567890abcdef0 
   # start-ec2:
   #   docker:
   #     - image: cimg/base:stable
