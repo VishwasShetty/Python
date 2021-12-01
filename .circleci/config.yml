@@ -10,14 +10,14 @@ jobs:
     executor: aws-cli/default
     steps:
       - checkout
-      - aws-cli/setup:
-          aws-access-key-id: kiikie 
-          aws-region: kkiio 
-          aws-secret-access-key: kiiikke 
-          configure-default-region: false 
-          profile-name: example 
-          role-arn: eeeeeeee
-      - run: "aws ec2 start-instances --instance-ids i-1234567890abcdef"
+      # - aws-cli/setup:
+      #     aws-access-key-id: kiikie 
+      #     aws-region: kkiio 
+      #     aws-secret-access-key: kiiikke 
+      #     configure-default-region: false 
+      #     profile-name: example 
+      #     role-arn: eeeeeeee
+      - run: "aws ec2 start-instances --region eu-west-2 --instance-ids i-1234567890abcdef0 "
   # start-ec2:
   #   docker:
   #     - image: cimg/base:stable
