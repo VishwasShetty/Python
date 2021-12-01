@@ -12,48 +12,38 @@ jobs:
     steps:
       - run: aws configure set aws_access_key_id EF1234
       - run: aws configure set aws_secret_access_key ABCD
-      - run:
-          name: AWS EC2 START INSTANCE
-          command: aws ec2 start-instances --region us-east-1 --instance-ids i-1234567890abcdef0
-  # start-ec2:
-  #   docker:
-  #     - image: cimg/base:stable
-  #   executor: aws-cli/default
-  #   steps:
-  # #     # - aws-cli/setup
-  # #     # - aws-cli/install 
-  #       - run: aws ec2 start-instances --instance-ids i-1234567890abcdef0
-  
+      - run: aws ec2 start-instances --region us-east-1 --instance-ids i-1234567890abcdef0
+        
   #Deployment Command
-  # pull-and-build:  
-  #   docker:  
-  #     - image: arvindr226/alpine-ssh 
-  #   steps:  
-  #     - run: apk add --update openssh-client git
-  #     - checkout
-  #     - run: ssh -oStrictHostKeyChecking=no -v $USER@$IP "./deploy.sh"
-  #     - run: 
-  #         command: |
-  #           'send deployment failuer status revert changes'
-  #         when: on_fail
+  pull-and-build:  
+    docker:  
+      - image: arvindr226/alpine-ssh 
+    steps:  
+      - run: apk add --update openssh-client git
+      - checkout
+      - run: ssh -oStrictHostKeyChecking=no -v $USER@$IP "./deploy.sh"
+      - run: 
+          command: |
+            'send deployment failuer status revert changes'
+          when: on_fail
 
-  # newman-collection-run:
-  #   executor: newman/postman-newman-docker
-  #   steps:
-  #     - checkout
-  #     - newman/newman-run:
-  #         collection: https://www.getpostman.com/collections/6446f5ecd440f49e4746?apikey=PMAK-61934b34bd1cd60051615fc3-a40f33edd7df44f1e7bf05b1fedefe47b7 
-  #     - run: 
-  #         command: ssh -oStrictHostKeyChecking=no -v $USER@$IP "./revertdeploy.sh"
-  #         when: on_fail 
+  newman-collection-run:
+    executor: newman/postman-newman-docker
+    steps:
+      - checkout
+      - newman/newman-run:
+          collection: https://www.getpostman.com/collections/6446f5ecd440f49e4746?apikey=PMAK-61934b34bd1cd60051615fc3-a40f33edd7df44f1e7bf05b1fedefe47b7 
+      - run: 
+          command: ssh -oStrictHostKeyChecking=no -v $USER@$IP "./revertdeploy.sh"
+          when: on_fail 
 
   # #deploy to the test server
-  # deploy:
-  #   docker:
-  #     - image: arvindr226/alpine-ssh
-  #   steps:
-  #     #ip and user of the test server
-  #     - run: ssh -oStrictHostKeyChecking=no -v $USER@$IP "./deploytest.sh"
+  deploy:
+    docker:
+      - image: arvindr226/alpine-ssh
+    steps:
+      #ip and user of the test server
+      - run: ssh -oStrictHostKeyChecking=no -v $USER@$IP "./deploytest.sh"
 
   newman-collection-run-test:
     executor: newman/postman-newman-docker
@@ -71,20 +61,22 @@ workflows:
   build-project:
     jobs:
       - start-ec2
-      # - pull-and-build:
-      #     filters:
-      #       branches:
-      #         only:
-      #           - master
+      - pull-and-build:
+          requires:
+            - start-ec2
+          filters:
+            branches:
+              only:
+                - master
                 
-      # - newman-collection-run: 
-      #     requires:
-      #       - pull-and-build
+      - newman-collection-run: 
+          requires:
+            - pull-and-build
           
-      # - deploy:
-      #     requires:
-      #       - newman-collection-run
+      - deploy:
+          requires:
+            - newman-collection-run
       
-      # - newman-collection-run-test:
-      #     requires:
-      #       - deploy
+      - newman-collection-run-test:
+          requires:
+            - deploy
