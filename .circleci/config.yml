@@ -5,18 +5,15 @@ orbs:
   newman: postman/newman@0.0.2  
   aws-cli: circleci/aws-cli@2.0
    
-jobs:
+jobs: 
   start-ec2:
-    docker:
-      - image: circleci/aws-cli@2.0
+    executor: aws-cli/default
     steps:
-      # configure aws access key and secret key
       - run: aws configure set aws_access_key_id EF1234
       - run: aws configure set aws_secret_access_key ABCD
       - run:
           name: AWS EC2 START INSTANCE
           command: aws ec2 start-instances --region us-east-1 --instance-ids i-1234567890abcdef0
-       
   # start-ec2:
   #   docker:
   #     - image: cimg/base:stable
