@@ -11,8 +11,6 @@ jobs:
       - image: cibuilds/aws:1.16.1
     steps:
       - checkout
-      - attach_workspace:
-          at: /home/circleci
       - run:
           name: AWS S3
           command: aws ec2 start-instances --instance-ids i-1234567890abcdef0
