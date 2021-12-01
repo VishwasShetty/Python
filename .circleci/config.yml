@@ -4,16 +4,23 @@ version: 2.1
 orbs:    
   newman: postman/newman@0.0.2  
   aws-cli: circleci/aws-cli@2.0
+  python: circleci/python@1.5.0
    
 jobs: 
-  start-ec2:
+  example-job:
     docker:
+      # replace with your preferred image
       - image: cimg/base:stable
-    executor: aws-cli/default
     steps:
-  #     # - aws-cli/setup
-  #     # - aws-cli/install 
-        - run: aws ec2 start-instances --instance-ids i-1234567890abcdef0
+      - python/install-packages
+  # start-ec2:
+  #   docker:
+  #     - image: cimg/base:stable
+  #   executor: aws-cli/default
+  #   steps:
+  # #     # - aws-cli/setup
+  # #     # - aws-cli/install 
+  #       - run: aws ec2 start-instances --instance-ids i-1234567890abcdef0
   pull-and-build:  
     docker:  
       - image: arvindr226/alpine-ssh 
@@ -59,7 +66,7 @@ workflows:
   version: 2
   build-project:
     jobs:
-      - start-ec2
+      - example-job
       - pull-and-build:
           filters:
             branches:
