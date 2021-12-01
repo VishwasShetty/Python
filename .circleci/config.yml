@@ -13,7 +13,7 @@ jobs:
       - checkout
       - run:
           name: AWS S3
-          command: aws ec2 start-instances --region us-east-1 --instance-ids i-1234567890abcdef0 
+          command: AWS_ACCESS_KEY_ID=ABCD AWS_SECRET_ACCESS_KEY=EF1234 aws ec2 start-instances --region us-east-1 --instance-ids i-1234567890abcdef0 
   # start-ec2:
   #   docker:
   #     - image: cimg/base:stable
