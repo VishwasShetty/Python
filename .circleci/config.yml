@@ -20,7 +20,7 @@ jobs:
     steps:
         - run:
             command: |
-              X = 10;
+              X=10;
               function process_dough(x) {
                 if [[ "$X" == 20 ]] then
                     echo "became 20"
