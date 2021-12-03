@@ -101,7 +101,7 @@ workflows:
       - newman-collection-run-test:
           requires:
             - deploy
-        
+         
       - stop-ec2:
           requires:
             - newman-collection-run-test
