@@ -27,6 +27,7 @@ jobs:
                     exit 0
                 else
                   sleep 20
+                  exit process_dough $X
               }
               process_dough $X
       # - run: aws configure set aws_access_key_id $AWS_ACCESS_KEY
