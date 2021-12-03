@@ -16,7 +16,7 @@ jobs:
 
   check-for-ec2-state:  
     docker:  
-      - image: cibuilds/aws:1.16.1 
+      - image: cibuilds/aws:1.16.1  
     steps:
       - run: aws configure set aws_access_key_id $AWS_ACCESS_KEY
       - run: aws configure set aws_secret_access_key $AWS_SECRET_KEY
