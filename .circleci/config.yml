@@ -6,21 +6,21 @@ orbs:
   # aws-cli: circleci/aws-cli@2.0
    
 jobs: 
-  # start-ec2:
-  #   docker:
-  #     - image: cibuilds/aws:1.16.1
-  #   steps:
-  #     - run: aws configure set aws_access_key_id $AWS_ACCESS_KEY
-  #     - run: aws configure set aws_secret_access_key $AWS_SECRET_KEY
-  #     - run: aws ec2 start-instances --region $AWS_EC2_REGION --instance-ids $AWS_EC2_INSTANCE_ID
+  start-ec2:
+    docker:
+      - image: cibuilds/aws:1.16.1
+    steps:
+      - run: aws configure set aws_access_key_id $AWS_ACCESS_KEY
+      - run: aws configure set aws_secret_access_key $AWS_SECRET_KEY
+      - run: aws ec2 start-instances --region $AWS_EC2_REGION --instance-ids $AWS_EC2_INSTANCE_ID
 
-  # check-for-ec2-status:  
-  #   docker:  
-  #     - image: cibuilds/aws:1.16.1  
-  #   steps:
-  #     - run: aws configure set aws_access_key_id $AWS_ACCESS_KEY
-  #     - run: aws configure set aws_secret_access_key $AWS_SECRET_KEY
-  #     - run: while INSTANCE_REACH_STATUS=$(aws ec2 describe-instance-status --region $AWS_EC2_REGION --instance-ids $AWS_EC2_INSTANCE_ID --output text --query 'InstanceStatuses[*].InstanceStatus.Details[*].Status'); test "$INSTANCE_REACH_STATUS" != "passed"; do sleep 20; echo -n '.'; done
+  check-for-ec2-status:  
+    docker:  
+      - image: cibuilds/aws:1.16.1  
+    steps:
+      - run: aws configure set aws_access_key_id $AWS_ACCESS_KEY
+      - run: aws configure set aws_secret_access_key $AWS_SECRET_KEY
+      - run: while INSTANCE_REACH_STATUS=$(aws ec2 describe-instance-status --region $AWS_EC2_REGION --instance-ids $AWS_EC2_INSTANCE_ID --output text --query 'InstanceStatuses[*].InstanceStatus.Details[*].Status'); test "$INSTANCE_REACH_STATUS" != "passed"; do sleep 20; echo -n '.'; done
   
   #Deployment Command
   pull-and-build:  
@@ -63,26 +63,28 @@ jobs:
           command: ssh -oStrictHostKeyChecking=no -v $USER@$IP "./revertdeploy.sh"
           when: on_fail
           
-  # stop-ec2: 
-  #   docker:
-  #     - image: cibuilds/aws:1.16.1
-  #   steps:
-  #     - run: aws configure set aws_access_key_id $AWS_ACCESS_KEY
-  #     - run: aws configure set aws_secret_access_key $AWS_SECRET_KEY
-  #     - run: aws ec2 stop-instances --region $AWS_EC2_REGION --instance-ids $AWS_EC2_INSTANCE_ID
+  stop-ec2: 
+    docker:
+      - image: cibuilds/aws:1.16.1
+    steps:
+      - run: aws configure set aws_access_key_id $AWS_ACCESS_KEY
+      - run: aws configure set aws_secret_access_key $AWS_SECRET_KEY
+      - run: aws ec2 stop-instances --region $AWS_EC2_REGION --instance-ids $AWS_EC2_INSTANCE_ID
 
 # Orchestrate our job run sequence
 workflows:
   version: 2
   build-project:
     jobs:
-      # - start-ec2
+      - start-ec2
 
-      # - check-for-ec2-status:
-      #     requires:
-      #       - start-ec2
+      - check-for-ec2-status:
+          requires:
+            - start-ec2
 
       - pull-and-build:
+          requires:
+            - check-for-ec2-status
           filters:
             branches:
               only:
@@ -100,6 +102,6 @@ workflows:
           requires:
             - deploy
          
-      # - stop-ec2:
-      #     requires:
-      #       - newman-collection-run-test
+      - stop-ec2:
+          requires:
+            - newman-collection-run-test
