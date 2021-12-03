@@ -20,13 +20,13 @@ jobs:
     steps:
         - run:
             command: |
-              X=10;
+              X="10";
               function process_dough() {
                 if [[ "$X" == 20 ]]; then
                     exit 0
                 else
                   sleep 10
-                  return process_dough 20
+                  return process_dough "$20"
                 fi
               }
               process_dough $X
