@@ -30,10 +30,10 @@ jobs:
       - run: apk add --update openssh-client git
       - checkout
       - run: ssh -oStrictHostKeyChecking=no -v $USER@$IP "./deploy.sh"
-      - run: 
-          command: |
-            'send deployment failuer status revert changes'
-          when: on_fail
+      # - run: 
+      #     command: |
+      #       'send deployment failuer status revert changes'
+      #     when: on_fail
 
   newman-collection-run:
     executor: newman/postman-newman-docker
@@ -41,9 +41,9 @@ jobs:
       - checkout
       - newman/newman-run:
           collection: https://www.getpostman.com/collections/6446f5ecd440f49e4746?apikey=PMAK-61934b34bd1cd60051615fc3-a40f33edd7df44f1e7bf05b1fedefe47b7 
-      - run: 
-          command: ssh -oStrictHostKeyChecking=no -v $USER@$IP "./revertdeploy.sh"
-          when: on_fail 
+      # - run: 
+      #     command: ssh -oStrictHostKeyChecking=no -v $USER@$IP "./revertdeploy.sh"
+      #     when: on_fail 
 
   # # # #deploy to the test server
   deploy:
@@ -59,9 +59,9 @@ jobs:
       - checkout
       - newman/newman-run:
           collection: https://www.getpostman.com/collections/6446f5ecd440f49e4746?apikey=PMAK-61934b34bd1cd60051615fc3-a40f33edd7df44f1e7bf05b1fedefe47b7 
-      - run: 
-          command: ssh -oStrictHostKeyChecking=no -v $USER@$IP "./revertdeploy.sh"
-          when: on_fail
+      # - run: 
+      #     command: ssh -oStrictHostKeyChecking=no -v $USER@$IP "./revertdeploy.sh"
+      #     when: on_fail
           
   stop-ec2: 
     docker:
