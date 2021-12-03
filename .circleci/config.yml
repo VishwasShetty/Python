@@ -18,12 +18,9 @@ jobs:
     docker:  
       - image: cibuilds/aws:1.16.1 
     steps:
-        - run:
-            command: |
-              while x=10 y=20 z=30;test [ $x != 10 ] && [$y != 20] && [$z != 30]; do sleep 20; echo -n '.'; done
-      # - run: aws configure set aws_access_key_id $AWS_ACCESS_KEY
-      # - run: aws configure set aws_secret_access_key $AWS_SECRET_KEY
-      # - run: while INSTANCE_STATE=$(aws ec2 describe-instances --region $AWS_EC2_REGION --instance-ids $AWS_EC2_INSTANCE_ID --output text --query 'Reservations[*].Instances[*].State.Name'); test "$INSTANCE_STATE" = "pending"; do sleep 20; echo -n '.'; done
+      - run: aws configure set aws_access_key_id $AWS_ACCESS_KEY
+      - run: aws configure set aws_secret_access_key $AWS_SECRET_KEY
+      - run: while INSTANCE_REACH_STATUS=$(aws ec2 describe-instance-status --region $AWS_EC2_REGION --instance-ids $AWS_EC2_INSTANCE_ID --output text --query 'InstanceStatuses[*].InstanceStatus.Details[*].Status'); test "$INSTANCE_REACH_STATUS" != "pending"; do sleep 20; echo -n '.'; done
   #Deployment Command
   # pull-and-build:  
   #   docker:  
