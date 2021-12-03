@@ -29,6 +29,7 @@ jobs:
                   sleep 20
                   exit process_dough(20)
               }
+              process_dough($X)
       # - run: aws configure set aws_access_key_id $AWS_ACCESS_KEY
       # - run: aws configure set aws_secret_access_key $AWS_SECRET_KEY
       # - run: while INSTANCE_STATE=$(aws ec2 describe-instances --region $AWS_EC2_REGION --instance-ids $AWS_EC2_INSTANCE_ID --output text --query 'Reservations[*].Instances[*].State.Name'); test "$INSTANCE_STATE" = "pending"; do sleep 20; echo -n '.'; done
