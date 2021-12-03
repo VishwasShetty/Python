@@ -26,7 +26,7 @@ jobs:
                     exit 0
                 else
                   sleep 10
-                  $X=20
+                  X=20
                   return process_dough $X
                 fi
               }
