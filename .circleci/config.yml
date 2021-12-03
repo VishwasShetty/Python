@@ -26,7 +26,7 @@ jobs:
                     exit 0
                 else
                   sleep 10
-                  retirn process_dough $X
+                  return process_dough $X
                 fi
               }
               process_dough $X
