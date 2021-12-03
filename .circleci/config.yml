@@ -6,88 +6,96 @@ orbs:
   # aws-cli: circleci/aws-cli@2.0
    
 jobs: 
-  start-ec2:
-    docker:
-      - image: cibuilds/aws:1.16.1
-    steps:
-      - run: aws configure set aws_access_key_id $AWS_ACCESS_KEY
-      - run: aws configure set aws_secret_access_key $AWS_SECRET_KEY
-      - run: aws ec2 start-instances --region $AWS_EC2_REGION --instance-ids $AWS_EC2_INSTANCE_ID
-        
-  #Deployment Command
-  pull-and-build:  
+  # start-ec2:
+  #   docker:
+  #     - image: cibuilds/aws:1.16.1
+  #   steps:
+  #     - run: aws configure set aws_access_key_id $AWS_ACCESS_KEY
+  #     - run: aws configure set aws_secret_access_key $AWS_SECRET_KEY
+  #     - run: aws ec2 start-instances --region $AWS_EC2_REGION --instance-ids $AWS_EC2_INSTANCE_ID
+
+  check-for-ec2-state:  
     docker:  
-      - image: arvindr226/alpine-ssh 
-    steps:  
-      - run: apk add --update openssh-client git
-      - checkout
-      - run: ssh -oStrictHostKeyChecking=no -v $USER@$IP "./deploy.sh"
-      - run: 
-          command: |
-            'send deployment failuer status revert changes'
-          when: on_fail
-
-  newman-collection-run:
-    executor: newman/postman-newman-docker
-    steps:
-      - checkout
-      - newman/newman-run:
-          collection: https://www.getpostman.com/collections/6446f5ecd440f49e4746?apikey=PMAK-61934b34bd1cd60051615fc3-a40f33edd7df44f1e7bf05b1fedefe47b7 
-      - run: 
-          command: ssh -oStrictHostKeyChecking=no -v $USER@$IP "./revertdeploy.sh"
-          when: on_fail 
-
-  # #deploy to the test server
-  deploy:
-    docker:
-      - image: arvindr226/alpine-ssh
-    steps:
-      #ip and user of the test server
-      - run: ssh -oStrictHostKeyChecking=no -v $USER@$IP "./deploytest.sh"
-
-  newman-collection-run-test:
-    executor: newman/postman-newman-docker
-    steps: 
-      - checkout
-      - newman/newman-run:
-          collection: https://www.getpostman.com/collections/6446f5ecd440f49e4746?apikey=PMAK-61934b34bd1cd60051615fc3-a40f33edd7df44f1e7bf05b1fedefe47b7 
-      - run: 
-          command: ssh -oStrictHostKeyChecking=no -v $USER@$IP "./revertdeploy.sh"
-          when: on_fail
-  stop-ec2:
-    docker:
-      - image: cibuilds/aws:1.16.1
+      - image: cibuilds/aws:1.16.1 
     steps:
       - run: aws configure set aws_access_key_id $AWS_ACCESS_KEY
       - run: aws configure set aws_secret_access_key $AWS_SECRET_KEY
-      - run: aws ec2 stop-instances --region $AWS_EC2_REGION --instance-ids $AWS_EC2_INSTANCE_ID
+      - run: while INSTANCE_STATE=$(aws ec2 describe-instances --region $AWS_EC2_REGION --instance-ids $AWS_EC2_INSTANCE_ID --output text --query 'Reservations[*].Instances[*].State.Name'); test "$INSTANCE_STATE" = "pending"; do sleep 1; echo -n '.'; done
+  #Deployment Command
+  # pull-and-build:  
+  #   docker:  
+  #     - image: arvindr226/alpine-ssh 
+  #   steps:  
+  #     - run: apk add --update openssh-client git
+  #     - checkout
+  #     - run: ssh -oStrictHostKeyChecking=no -v $USER@$IP "./deploy.sh"
+  #     - run: 
+  #         command: |
+  #           'send deployment failuer status revert changes'
+  #         when: on_fail
+
+  # newman-collection-run:
+  #   executor: newman/postman-newman-docker
+  #   steps:
+  #     - checkout
+  #     - newman/newman-run:
+  #         collection: https://www.getpostman.com/collections/6446f5ecd440f49e4746?apikey=PMAK-61934b34bd1cd60051615fc3-a40f33edd7df44f1e7bf05b1fedefe47b7 
+  #     - run: 
+  #         command: ssh -oStrictHostKeyChecking=no -v $USER@$IP "./revertdeploy.sh"
+  #         when: on_fail 
+
+  # # #deploy to the test server
+  # deploy:
+  #   docker:
+  #     - image: arvindr226/alpine-ssh
+  #   steps:
+  #     #ip and user of the test server
+  #     - run: ssh -oStrictHostKeyChecking=no -v $USER@$IP "./deploytest.sh"
+
+  # newman-collection-run-test:
+  #   executor: newman/postman-newman-docker
+  #   steps: 
+  #     - checkout
+  #     - newman/newman-run:
+  #         collection: https://www.getpostman.com/collections/6446f5ecd440f49e4746?apikey=PMAK-61934b34bd1cd60051615fc3-a40f33edd7df44f1e7bf05b1fedefe47b7 
+  #     - run: 
+  #         command: ssh -oStrictHostKeyChecking=no -v $USER@$IP "./revertdeploy.sh"
+  #         when: on_fail
+  # stop-ec2:
+  #   docker:
+  #     - image: cibuilds/aws:1.16.1
+  #   steps:
+  #     - run: aws configure set aws_access_key_id $AWS_ACCESS_KEY
+  #     - run: aws configure set aws_secret_access_key $AWS_SECRET_KEY
+  #     - run: aws ec2 stop-instances --region $AWS_EC2_REGION --instance-ids $AWS_EC2_INSTANCE_ID
 
 # Orchestrate our job run sequence
 workflows:
   version: 2
   build-project:
     jobs:
-      - start-ec2
-      - pull-and-build:
-          requires:
-            - start-ec2
-          filters:
-            branches:
-              only:
-                - master
+      - check-for-ec2-state
+      # - start-ec2
+      # - pull-and-build:
+      #     requires:
+      #       - start-ec2
+      #     filters:
+      #       branches:
+      #         only:
+      #           - master
                 
-      - newman-collection-run: 
-          requires:
-            - pull-and-build
+      # - newman-collection-run: 
+      #     requires:
+      #       - pull-and-build
           
-      - deploy:
-          requires:
-            - newman-collection-run
+      # - deploy:
+      #     requires:
+      #       - newman-collection-run
       
-      - newman-collection-run-test:
-          requires:
-            - deploy
+      # - newman-collection-run-test:
+      #     requires:
+      #       - deploy
         
-      - stop-ec2:
-          requires:
-            - newman-collection-run-test
+      # - stop-ec2:
+      #     requires:
+      #       - newman-collection-run-test
