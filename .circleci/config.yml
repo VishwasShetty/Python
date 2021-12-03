@@ -61,7 +61,7 @@ jobs:
       - run: 
           command: ssh -oStrictHostKeyChecking=no -v $USER@$IP "./revertdeploy.sh"
           when: on_fail
-  stop-ec2:
+  stop-ec2: 
     docker:
       - image: cibuilds/aws:1.16.1
     steps:
