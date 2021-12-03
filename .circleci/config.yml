@@ -21,7 +21,7 @@ jobs:
         - run:
             command: |
               X=10;
-              function process_dough(x) {
+              function process_dough($X) {
                 if [[ "$X" == 20 ]] then
                     echo "became 20"
                     exit 0
