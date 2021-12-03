@@ -23,11 +23,10 @@ jobs:
               X=10;
               function process_dough() {
                 if [[ "$X" == 20 ]]; then
-                    echo "became 20"
-                    exit 0
+                    echo 0
                 else
-                  sleep 20
-                  exit process_dough $X
+                  sleep 10
+                  echo process_dough $X
                 fi
               }
               process_dough $X
