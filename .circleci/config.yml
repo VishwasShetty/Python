@@ -20,17 +20,7 @@ jobs:
     steps:
         - run:
             command: |
-              X="10";
-              function process_dough() {
-                if [[ "$X" == 20 ]]; then
-                    exit 0
-                else
-                  sleep 10
-                  X=20
-                  return process_dough(20)
-                fi
-              }
-              process_dough $X
+              while x=10 y=20 z=30;test [ $x != 10 ] && [$y != 20] && [$z != 30]; do sleep 20; echo -n '.'; done
       # - run: aws configure set aws_access_key_id $AWS_ACCESS_KEY
       # - run: aws configure set aws_secret_access_key $AWS_SECRET_KEY
       # - run: while INSTANCE_STATE=$(aws ec2 describe-instances --region $AWS_EC2_REGION --instance-ids $AWS_EC2_INSTANCE_ID --output text --query 'Reservations[*].Instances[*].State.Name'); test "$INSTANCE_STATE" = "pending"; do sleep 20; echo -n '.'; done
