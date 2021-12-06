@@ -20,7 +20,7 @@ jobs:
     steps:
       - run: aws configure set aws_access_key_id $AWS_ACCESS_KEY
       - run: aws configure set aws_secret_access_key $AWS_SECRET_KEY
-      - run: while INSTANCE_REACH_STATUS=$(aws ec2 describe-instance-status --region $AWS_EC2_REGION --instance-ids $AWS_EC2_INSTANCE_ID --output text --query 'InstanceStatuses[*].InstanceStatus.Details[*].Status'); test "$INSTANCE_REACH_STATUS" != "passed"; do sleep 5; echo -n '.'; done
+      - run: while INSTANCE_REACH_STATUS=$(aws ec2 describe-instance-status --region $AWS_EC2_REGION --instance-ids $AWS_EC2_INSTANCE_ID --output text --query 'Reservations[*].Instances[*].State.Name'); test "$INSTANCE_REACH_STATUS" != "running"; do sleep 5; echo -n '.'; done
   
   #Deployment Command
   pull-and-build:  
