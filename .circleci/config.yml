@@ -2,7 +2,7 @@ version: 2.1
  
 # Define the jobs we want to run for this project
 orbs:    
-  newman: postman/newman@4.5.6   
+  newman: postman/newman@0.0.2   
   # aws-cli: circleci/aws-cli@2.0 
    
 jobs: 
@@ -36,7 +36,9 @@ jobs:
   #     #     when: on_fail 
 
   newman-collection-run:
-    executor: newman/postman-newman-docker
+    executor: 
+      name: newman/postman-newman-docker
+      tag: 5.2.0
     steps:
       - checkout
       - newman/newman-run:
