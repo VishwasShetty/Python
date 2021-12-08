@@ -39,7 +39,7 @@ jobs:
     executor:  
       name: newman/postman-newman-docker   
       tag: 5.3.0
-    steps:  
+    steps:   
       - checkout
       - newman/newman-run:
           collection: https://www.getpostman.com/collections/08cc238226b945438fd5?apikey=PMAK-61b05246b7832d003b3ec8da-84dbd14d8d07ffeae0eb6c58980aad9ebe 
