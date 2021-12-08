@@ -38,7 +38,7 @@ jobs:
   newman-collection-run:
     executor:  
       name: newman/postman-newman-docker   
-      tag: 6.0.0 
+      tag: 5.0.0
     steps:  
       - checkout
       - newman/newman-run:
