@@ -33,7 +33,7 @@ jobs:
   #     # - run: 
   #     #     command: |
   #     #       'send deployment failuer status revert changes'
-  #     #     when: on_fail
+  #     #     when: on_fail 
 
   newman-collection-run:
     executor: newman/postman-newman-docker
