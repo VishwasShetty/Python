@@ -40,7 +40,7 @@ jobs:
     steps:
       - checkout
       - newman/newman-run:
-          collection: https://www.getpostman.com/collections/08cc238226b945438fd5?apikey=PMAK-61b05246b7832d003b3ec8da-84dbd14d8d07ffeae0eb6c58980aad9ebe \
+          collection: https://www.getpostman.com/collections/08cc238226b945438fd5?apikey=PMAK-61b05246b7832d003b3ec8da-84dbd14d8d07ffeae0eb6c58980aad9ebe 
           environment: https://go.postman.co/workspace/My-Workspace~ac310288-a672-4b3b-8c3e-e98f652651af/environment/14515040-26c6c244-d426-4c88-afab-3e3fdb1bd2d1
       # - run: 
       #     command: ssh -oStrictHostKeyChecking=no -v $USER@$IP "./revertdeploy.sh"
